@@ -1,6 +1,6 @@
-{
+void DataFilter(){
     unsigned int fileOrder = 10;
-    int NdataFiles = 1;
+    int NdataFiles = 2;
     
     TFile *fin;
     TTree *tin;
@@ -23,7 +23,23 @@
     double mwtgt[96];
     float fom;
     
-    //--- Define histograms ---
+    //--- Define all histograms ---
+    TH2F *h_vp875_vs_fom = new TH2F("h_vp875_vs_fom",";FOM;VP875 ",5000,0,5,1000,0,5);
+    TH2F *h_hp875_vs_fom = new TH2F("h_hp875_vs_fom",";FOM;HP875 ",5000,0,5,1000,-5,0);
+    TH2F *h_r875_vs_fom = new TH2F("h_r875_vs_fom",";FOM;r_{875} ",5000,0,5,1000,0,5);
+    TH2F *h_rtg1_vs_fom = new TH2F("h_rtg1_vs_fom",";FOM;r_{TG1} ",5000,0,5.,1000,0,5);
+    
+    //lm875a:
+    TH2F *h_r875_vs_lm875a = new TH2F("h_r875_vs_lm875a",";LM875a;r_{875} ",1000,0,.2,1000,0,5);
+    TH2F *h_fom_vs_lm875a = new TH2F("h_fom_vs_lm875a",";LM875a;FOM ",5000,0,.2,1000,-5,5);
+    TH2F *h_hp875_vs_lm875a = new TH2F("h_hp875_vs_lm875a",";LM875a;HP875 ",1000,0,.2,1000,-5,5);
+    TH2F *h_hptg1_vs_lm875a = new TH2F("h_hptg1_vs_lm875a",";LM875a;HPTG1 ",1000,0,.2,1000,-5,5);
+    TH2F *h_vp875_vs_lm875a = new TH2F("h_vp875_vs_lm875a",";LM875a;VP875 ",1000,0,.2,1000,-5,5);
+    TH2F *h_vptg1_vs_lm875a = new TH2F("h_vptg1_vs_lm875a",";LM875a;VPTG1 ",1000,0,.2,1000,-5,5);
+    TH2F *h_rtg1_vs_lm875a = new TH2F("h_rtg1_vs_lm875a",";LM875a;r_{TG1} ",1000,0,.2,1000,-5,5);
+    TH2F *h_horang_vs_lm875a = new TH2F("h_horang_vs_lm875a",";LM875a;tan(#theta_{H}) ",1000,0,.2,1000,-5,5);
+    TH2F *h_horpos_vs_lm875a = new TH2F("h_horpos_vs_lm875a",";LM875a;pos_{H} (mm) ",1000,0,.2,1000,-5,5);
+
     //lm875b:
     TH2F *h_r875_vs_lm875b = new TH2F("h_r875_vs_lm875b",";LM875b;r_{875} ",1000,0,.2,1000,0,5);
     TH2F *h_fom_vs_lm875b = new TH2F("h_fom_vs_lm875b",";LM875b;FOM ",1000,0,.2,1000,-5,5);
@@ -32,8 +48,19 @@
     TH2F *h_vp875_vs_lm875b = new TH2F("h_vp875_vs_lm875b",";LM875b;VP875 ",1000,0,.2,1000,-5,5);
     TH2F *h_vptg1_vs_lm875b = new TH2F("h_vptg1_vs_lm875b",";LM875b;VPTG1 ",1000,0,.2,1000,-5,5);
     TH2F *h_rtg1_vs_lm875b = new TH2F("h_rtg1_vs_lm875b",";LM875b;r_{TG1} ",1000,0,.2,1000,-5,5);
-    //TH2F *h_horang_vs_lm875b = new TH2F("h_horang_vs_lm875b",";LM875b;tan(#theta_{H}) ",1000,0,.2,1000,-5,5);
-    //TH2F *h_horpos_vs_lm875b = new TH2F("h_horpos_vs_lm875b",";LM875b;pos_{H} (mm) ",1000,0,.2,1000,-5,5);
+    TH2F *h_horang_vs_lm875b = new TH2F("h_horang_vs_lm875b",";LM875b;tan(#theta_{H}) ",1000,0,.2,1000,-5,5);
+    TH2F *h_horpos_vs_lm875b = new TH2F("h_horpos_vs_lm875b",";LM875b;pos_{H} (mm) ",1000,0,.2,1000,-5,5);
+    
+    //lm875c:
+    TH2F *h_r875_vs_lm875c = new TH2F("h_r875_vs_lm875c",";LM875c;r_{875} ",1000,0,.2,1000,0,5);
+    TH2F *h_fom_vs_lm875c = new TH2F("h_fom_vs_lm875c",";LM875c;FOM ",1000,0,.2,1000,-5,5);
+    TH2F *h_hp875_vs_lm875c = new TH2F("h_hp875_vs_lm875c",";LM875c;HP875 ",1000,0,.2,1000,-5,5);
+    TH2F *h_hptg1_vs_lm875c = new TH2F("h_hptg1_vs_lm875c",";LM875c;HPTG1 ",1000,0,.2,1000,-5,5);
+    TH2F *h_vp875_vs_lm875c = new TH2F("h_vp875_vs_lm875c",";LM875c;VP875 ",1000,0,.2,1000,-5,5);
+    TH2F *h_vptg1_vs_lm875c = new TH2F("h_vptg1_vs_lm875c",";LM875c;VPTG1 ",1000,0,.2,1000,-5,5);
+    TH2F *h_rtg1_vs_lm875c = new TH2F("h_rtg1_vs_lm875c",";LM875c;r_{TG1} ",1000,0,.2,1000,-5,5);
+    TH2F *h_horang_vs_lm875c = new TH2F("h_horang_vs_lm875c",";LM875c;tan(#theta_{H}) ",1000,0,.2,1000,-5,5);
+    TH2F *h_horpos_vs_lm875c = new TH2F("h_horpos_vs_lm875c",";LM875c;pos_{H} (mm) ",1000,0,.2,1000,-5,5);
     
     //-- loop over the files
     for(int i = 0; i<NdataFiles; i++){
@@ -74,11 +101,58 @@
             if(hp875 == -999)
                 continue;
             
+            double r_875 = sqrt(vp875*vp875 + hp875*hp875);
+            h_r875_vs_fom->Fill(fom,r_875);
+            
+            double r_tg1 = sqrt(vptg1*vptg1 + hptg1*hptg1);
+            h_rtg1_vs_fom->Fill(fom,r_tg1);
+            
             cout<<hp875<<endl;
         }
-        
         
         fin->Close();
     }
 
+    //--- Open oyrput file:
+    TFile *out = new TFile("output_filter.root","recreate");
+    
+    h_fom_vs_lm875a->Write();
+    h_fom_vs_lm875b->Write();
+    h_fom_vs_lm875c->Write();
+    
+    h_vp875_vs_fom->Write();
+    h_hp875_vs_fom->Write();
+    h_r875_vs_fom->Write();
+    h_rtg1_vs_fom->Write();
+    
+    h_rtg1_vs_lm875a->Write();
+    h_r875_vs_lm875a->Write();
+    h_horang_vs_lm875a->Write();
+    h_horpos_vs_lm875a->Write();
+    
+    h_hp875_vs_lm875a->Write();
+    h_vp875_vs_lm875a->Write();
+    h_hptg1_vs_lm875a->Write();
+    h_vptg1_vs_lm875a->Write();
+    
+    h_rtg1_vs_lm875b->Write();
+    h_r875_vs_lm875b->Write();
+    h_horang_vs_lm875b->Write();
+    h_horpos_vs_lm875b->Write();
+    
+    h_hp875_vs_lm875b->Write();
+    h_vp875_vs_lm875b->Write();
+    h_hptg1_vs_lm875b->Write();
+    h_vptg1_vs_lm875b->Write();
+    
+    h_rtg1_vs_lm875c->Write();
+    h_r875_vs_lm875c->Write();
+    h_horang_vs_lm875c->Write();
+    h_horpos_vs_lm875c->Write();
+    
+    h_hp875_vs_lm875c->Write();
+    h_vp875_vs_lm875c->Write();
+    h_hptg1_vs_lm875c->Write();
+    h_vptg1_vs_lm875c->Write();
+    
 }
