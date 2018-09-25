@@ -175,7 +175,7 @@ void DataFilter(){
         fin->Close();
     }
 
-    //--- Open oyrput file:
+    //--- Open output file:
     TFile *out = new TFile("output_filter.root","recreate");
     
     h_fom_vs_lm875a->Write();
