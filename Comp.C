@@ -1,6 +1,6 @@
 void Comp(){
 
-    int const Nplots = 10;
+    int const Nplots = 14;
     
     gStyle->SetOptStat(kFALSE);
     gStyle->SetOptStat(0000);
@@ -61,12 +61,25 @@ void Comp(){
     h1[10] = (TH2F*)f1->Get("h_horang_vs_lm875c");
     h2[10] = (TH2F*)f2->Get("h_horang_vs_lm875c");
     
+    // r875 vs lm and fom
+    h1[11] = (TH2F*)f1->Get("h_r875_vs_fom");
+    h2[11] = (TH2F*)f2->Get("h_r875_vs_fom");
+    
+    h1[12] = (TH2F*)f1->Get("h_r875_vs_lm875a");
+    h2[12] = (TH2F*)f2->Get("h_r875_vs_lm875a");
+    
+    h1[12] = (TH2F*)f1->Get("h_r875_vs_lm875b");
+    h2[12] = (TH2F*)f2->Get("h_r875_vs_lm875b");
+    
+    h1[14] = (TH2F*)f1->Get("h_r875_vs_lm875c");
+    h2[14] = (TH2F*)f2->Get("h_r875_vs_lm875c");
+    
     //------------------------
     // Setup plot options:
     h2[0]->GetXaxis()->SetRange(0,1500);
     h2[1]->GetXaxis()->SetRange(0,1500);
     
-    for(int i=0; i<=Nplots; i++){
+    for(int i=0; i<15; i++){
         h1[i]->SetMarkerColor(2);
         h1[i]->SetMarkerStyle(2);
         h1[i]->SetMarkerSize(0.2);
@@ -81,7 +94,7 @@ void Comp(){
     
     char name[100];
     
-    for(int i=0; i<=Nplots; i++){
+    for(int i=0; i<15; i++){
         sprintf(name,"c%d",i);
         
         c1[i] = new TCanvas(name," ",800,800);
@@ -89,26 +102,5 @@ void Comp(){
         h1[i]->Draw("same");
         
     }
-    /*
-    c1[0] = new TCanvas("c0"," ",800,800);
-    h2[0]->Draw();
-    h1[0]->Draw("same");
-    
-    c1[1] = new TCanvas("c1"," ",800,800);
-    h2[1]->Draw();
-    h1[1]->Draw("same");
-    
-    c1[2] = new TCanvas("c2"," ",800,800);
-    h2[2]->Draw();
-    h1[2]->Draw("same");
-    
-    c1[3] = new TCanvas("c3"," ",800,800);
-    h2[3]->Draw();
-    h1[3]->Draw("same");
-    
-    c1[4] = new TCanvas("c4"," ",800,800);
-    h2[4]->Draw();
-    h1[4]->Draw("same");
-     */
     
 }
