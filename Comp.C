@@ -1,6 +1,6 @@
 void Comp(){
 
-    int const Nplots = 14;
+    int const Nplots = 20;
     
     gStyle->SetOptStat(kFALSE);
     gStyle->SetOptStat(0000);
@@ -18,13 +18,13 @@ void Comp(){
     gStyle->SetCanvasBorderMode(0);
     
     // open files:
-    TFile *f1 = new TFile("DataFromPNFS/output_filter_00_01_11_10_numFiles_5_badFoM.root","read");
-    TFile *f2 = new TFile("DataFromPNFS/output_filter_00_01_11_10_numFiles_5_goodFoM.root","read");
+    TFile *f1 = new TFile("DataFromPNFS/output_filter_00_01_17_83_numFiles_1_badFoM_targScan.root","read");
+    TFile *f2 = new TFile("DataFromPNFS/output_filter_00_01_17_83_numFiles_1_goodFoM_targScan.root","read");
     
     //--------------------------
     // Read histograms:
-    TH2F *h1[20];
-    TH2F *h2[20];
+    TH2F *h1[30];
+    TH2F *h2[30];
     
     h1[0] = (TH2F*)f1->Get("h_hp875_vs_fom");
     h2[0] = (TH2F*)f2->Get("h_hp875_vs_fom");
@@ -51,7 +51,7 @@ void Comp(){
     h1[7] = (TH2F*)f1->Get("h_horpos_vs_lm875c");
     h2[7] = (TH2F*)f2->Get("h_horpos_vs_lm875c");
     
-    // angle vs lm
+    // angle H vs lm
     h1[8] = (TH2F*)f1->Get("h_horang_vs_lm875a");
     h2[8] = (TH2F*)f2->Get("h_horang_vs_lm875a");
     
@@ -71,15 +71,45 @@ void Comp(){
     h1[12] = (TH2F*)f1->Get("h_r875_vs_lm875b");
     h2[12] = (TH2F*)f2->Get("h_r875_vs_lm875b");
     
-    h1[14] = (TH2F*)f1->Get("h_r875_vs_lm875c");
-    h2[14] = (TH2F*)f2->Get("h_r875_vs_lm875c");
+    h1[13] = (TH2F*)f1->Get("h_r875_vs_lm875c");
+    h2[13] = (TH2F*)f2->Get("h_r875_vs_lm875c");
+    
+    // pos Ver vs lm
+    h1[14] = (TH2F*)f1->Get("h_verpos_vs_lm875a");
+    h2[14] = (TH2F*)f2->Get("h_verpos_vs_lm875a");
+    
+    h1[15] = (TH2F*)f1->Get("h_verpos_vs_lm875b");
+    h2[15] = (TH2F*)f2->Get("h_verpos_vs_lm875b");
+    
+    h1[16] = (TH2F*)f1->Get("h_verpos_vs_lm875c");
+    h2[16] = (TH2F*)f2->Get("h_verpos_vs_lm875c");
+    
+    // angle Ver vs lm
+    h1[17] = (TH2F*)f1->Get("h_verang_vs_lm875a");
+    h2[17] = (TH2F*)f2->Get("h_verang_vs_lm875a");
+    
+    h1[18] = (TH2F*)f1->Get("h_verang_vs_lm875b");
+    h2[18] = (TH2F*)f2->Get("h_verang_vs_lm875b");
+    
+    h1[19] = (TH2F*)f1->Get("h_verang_vs_lm875c");
+    h2[19] = (TH2F*)f2->Get("h_verang_vs_lm875c");
+    
+    // angle Ver vs lm
+    h1[20] = (TH2F*)f1->Get("h_hp875_vs_lm875a");
+    h2[20] = (TH2F*)f2->Get("h_hp875_vs_lm875a");
+    
+    h1[21] = (TH2F*)f1->Get("h_hp875_vs_lm875b");
+    h2[21] = (TH2F*)f2->Get("h_hp875_vs_lm875b");
+    
+    h1[22] = (TH2F*)f1->Get("h_hp875_vs_lm875c");
+    h2[22] = (TH2F*)f2->Get("h_hp875_vs_lm875c");
     
     //------------------------
     // Setup plot options:
     h2[0]->GetXaxis()->SetRange(0,1500);
     h2[1]->GetXaxis()->SetRange(0,1500);
     
-    for(int i=0; i<15; i++){
+    for(int i=0; i<23; i++){
         h1[i]->SetMarkerColor(2);
         h1[i]->SetMarkerStyle(2);
         h1[i]->SetMarkerSize(0.2);
@@ -89,17 +119,21 @@ void Comp(){
         h2[i]->SetMarkerSize(0.2);
     }
     
-    // Plot histograms on cancas:
-    TCanvas *c1[20];
+    // Open output file:
+    TFile *output = new TFile("output_target_scan.root","recreate");
+    
+    // Plot histograms on canvas:
+    TCanvas *c1[30];
     
     char name[100];
     
-    for(int i=0; i<15; i++){
+    for(int i=0; i<23; i++){
         sprintf(name,"c%d",i);
         
         c1[i] = new TCanvas(name," ",800,800);
         h2[i]->Draw();
         h1[i]->Draw("same");
+        c1[i]->Write();
         
     }
     
